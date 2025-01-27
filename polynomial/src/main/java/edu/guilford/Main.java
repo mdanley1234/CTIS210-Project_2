@@ -2,15 +2,20 @@ package edu.guilford;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
         ArrayList<Polynomial> polynomials = new ArrayList<>();
         ArrayList<Integer> degrees = new ArrayList<>();
         ArrayList<Double> coefficients = new ArrayList<>();
 
-        for (int i = 0; i < 100; i++) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of random polynomials to generate: ");
+        int numPolynomials = scanner.nextInt();
+        scanner.close();
+
+        for (int i = 0; i < numPolynomials; i++) {
             Polynomial poly = new Polynomial();
             polynomials.add(poly);
             System.out.println("Polynomial " + (i + 1) + ": " + poly.toString());
