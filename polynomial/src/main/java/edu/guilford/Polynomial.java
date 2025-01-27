@@ -7,9 +7,18 @@ public class Polynomial implements Comparable<Polynomial> {
     private int degree;
     
     // Constructors
+    // public Polynomial() {
+    //     coefficients = new ArrayList<Double>();
+    //     degree = -1;
+    // }
+
+    // New Random Constructor (Degree: [3,10] | Coefficients [-5,5])
     public Polynomial() {
-        coefficients = new ArrayList<Double>();
-        degree = -1;
+        this.degree = 3 + (int)(Math.random() * 8); // Random degree between 3 and 10
+        this.coefficients = new ArrayList<Double>();
+        for (int i = 0; i <= degree; i++) {
+            this.coefficients.add(-5 + Math.random() * 10); // Random coefficient between -5 and 5
+        }
     }
 
     public Polynomial(ArrayList<Double> coefficients) {
