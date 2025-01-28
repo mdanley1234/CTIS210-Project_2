@@ -4,7 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+/**
+ * Main class to manage polynomial generation, sorting, and searching.
+ */
 public class Main {
+    /**
+     * Main method to interact with the user and perform various operations like sorting and searching polynomials.
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         ArrayList<Polynomial> polynomials = new ArrayList<>();
         ArrayList<Integer> degrees = new ArrayList<>();
@@ -15,6 +23,7 @@ public class Main {
         int numPolynomials = scanner.nextInt();
         scanner.close();
 
+        // Generate random polynomials and store them
         for (int i = 0; i < numPolynomials; i++) {
             Polynomial poly = new Polynomial();
             polynomials.add(poly);
@@ -28,147 +37,221 @@ public class Main {
         double maxCoefficient = Collections.max(coefficients);
         double minCoefficient = Collections.min(coefficients);
 
+        // Output the statistics
+        System.out.println("");
         System.out.println("Max Degree: " + maxDegree);
         System.out.println("Min Degree: " + minDegree);
         System.out.println("Max Coefficient: " + maxCoefficient);
         System.out.println("Min Coefficient: " + minCoefficient);
+        System.out.println("");
+
+        // Test Sorting Methods
+        selectionSort(polynomials);
+
+        // Scramble array before applying the next sorting method
+        scrambleArray(polynomials);
+        mergeSort(polynomials);
+
+        // Scramble array again before applying the final sorting method
+        scrambleArray(polynomials);
+        builtInSort(polynomials);
+        System.out.println("");
+
+        // Test Search Methods
+        Polynomial searchPolynomial = polynomials.get((int) (Math.random() * polynomials.size()));
+        System.out.println("Selected Search Polynomial: " + searchPolynomial);
+
+        // Perform Linear Search
+        int linearSearchResult = linearSearch(polynomials, searchPolynomial);
+        System.out.println("Linear Search Result Index: " + linearSearchResult);
+
+        // Perform Binary Search
+        int binarySearchResult = binarySearch(polynomials, searchPolynomial);
+        System.out.println("Binary Search Result Index: " + binarySearchResult);
+
+        // Perform Built-in Binary Search
+        int builtInBinarySearchResult = builtInBinarySearch(polynomials, searchPolynomial);
+        System.out.println("Built-in Binary Search Result Index: " + builtInBinarySearchResult);
+        System.out.println("");
+
+        // Create a new polynomial that can't exist in the list
+        Polynomial nonExistentPolynomial = new Polynomial();
+        nonExistentPolynomial.setCoefficient(100, 1.0); // Set a high degree coefficient to ensure it doesn't exist
+
+        System.out.println("Non-existent Polynomial: " + nonExistentPolynomial);
+
+        // Perform Linear Search on non-existent polynomial
+        int linearSearchNonExistentResult = linearSearch(polynomials, nonExistentPolynomial);
+        System.out.println("Linear Search Result Index for Non-existent Polynomial: " + linearSearchNonExistentResult);
+
+        // Perform Binary Search on non-existent polynomial
+        int binarySearchNonExistentResult = binarySearch(polynomials, nonExistentPolynomial);
+        System.out.println("Binary Search Result Index for Non-existent Polynomial: " + binarySearchNonExistentResult);
+
+        // Perform Built-in Binary Search on non-existent polynomial
+        int builtInBinarySearchNonExistentResult = builtInBinarySearch(polynomials, nonExistentPolynomial);
+        System.out.println("Built-in Binary Search Result Index for Non-existent Polynomial: " + builtInBinarySearchNonExistentResult);
     }
 
-    // public static void main(String[] args) {
-    //     // Preset coefficient lists
-    //     ArrayList<Double> c1 = new ArrayList<>(Arrays.asList(1.0, 2.0, 0.0, 4.0, 0.0));
-    //     ArrayList<Double> c2 = new ArrayList<>(Arrays.asList(1.0, 2.0, 3.0, 4.0, 0.0));
-    //     ArrayList<Double> c3 = new ArrayList<>(Arrays.asList(1.0, 2.0, 3.0, 4.0, 0.0)); // Copy c2
+    /**
+     * Scrambles the order of the polynomials in the provided list using a random shuffle.
+     *
+     * @param polynomials list of polynomials to scramble
+     */
+    public static void scrambleArray(ArrayList<Polynomial> polynomials) {
+        Collections.shuffle(polynomials);
+    }
 
-    //     // Create polynomials
-    //     Polynomial p1 = new Polynomial(3); // Random 3rd degree polynomial
-    //     Polynomial p2 = new Polynomial(3); // Random 3rd degree polynomial
-    //     Polynomial p3 = new Polynomial(); // Empty polynomial
-    //     Polynomial p4 = new Polynomial(); // Empty polynomial
-    //     Polynomial p5 = new Polynomial(c1); // Pre-determined polynomial
-    //     Polynomial p6 = new Polynomial(c2); // Pre-determined polynomial
+    /**
+     * Sorts the list of polynomials using selection sort.
+     *
+     * @param polynomials the list of polynomials to be sorted
+     */
+    public static void selectionSort(ArrayList<Polynomial> polynomials) {
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < polynomials.size() - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < polynomials.size(); j++) {
+                if (polynomials.get(j).compareTo(polynomials.get(minIndex)) < 0) {
+                    minIndex = j;
+                }
+            }
+            Collections.swap(polynomials, i, minIndex);
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println("Selection Sort Time: " + (endTime - startTime) + " ms");
+    }
 
-    //     // Test toString Method
-    //     System.out.println("Polynomial toString Test:");
-    //     System.out.println("p1: " + p1.toString());
-    //     System.out.println("p2: " + p2.toString());
-    //     System.out.println("p3: " + p3.toString());
-    //     System.out.println("p4: " + p4.toString());
-    //     System.out.println("p5: " + p5.toString());
-    //     System.out.println("p6: " + p6.toString());
+    /**
+     * Sorts the list of polynomials using merge sort.
+     *
+     * @param polynomials the list of polynomials to be sorted
+     */
+    public static void mergeSort(ArrayList<Polynomial> polynomials) {
+        long startTime = System.currentTimeMillis();
+        mergeSortHelper(polynomials, 0, polynomials.size() - 1);
+        long endTime = System.currentTimeMillis();
+        System.out.println("Merge Sort Time: " + (endTime - startTime) + " ms");
+    }
 
-    //     // Test degree getter
-    //     System.out.println("\nPolynomial Degree Getter Test:");
-    //     System.out.println("p1 degree: " + p1.getDegree());
-    //     System.out.println("p2 degree: " + p2.getDegree());
-    //     System.out.println("p3 degree: " + p3.getDegree());
-    //     System.out.println("p4 degree: " + p4.getDegree());
-    //     System.out.println("p5 degree: " + p5.getDegree());
-    //     System.out.println("p6 degree: " + p6.getDegree());
+    /**
+     * Helper method to perform merge sort on the polynomials list.
+     *
+     * @param polynomials the list of polynomials to be sorted
+     * @param left        the left index of the range to be sorted
+     * @param right       the right index of the range to be sorted
+     */
+    private static void mergeSortHelper(ArrayList<Polynomial> polynomials, int left, int right) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            mergeSortHelper(polynomials, left, mid);
+            mergeSortHelper(polynomials, mid + 1, right);
+            merge(polynomials, left, mid, right);
+        }
+    }
 
-    //     // Test coefficients getter
-    //     System.out.println("\nPolynomial Coefficients Getter Test:");
-    //     System.out.println("p1 coefficients: " + p1.getCoefficients());
-    //     // System.out.println("p2 coefficients: " + p2.getCoefficients());
-    //     System.out.println("p3 coefficients: " + p3.getCoefficients());
-    //     // System.out.println("p4 coefficients: " + p4.getCoefficients());
-    //     System.out.println("p5 coefficients: " + p5.getCoefficients());
-    //     // System.out.println("p6 coefficients: " + p6.getCoefficients());
+    /**
+     * Merges two sorted sublists of polynomials into one sorted list.
+     *
+     * @param polynomials the list of polynomials to be merged
+     * @param left        the left index of the range to merge
+     * @param mid         the midpoint index of the range
+     * @param right       the right index of the range to merge
+     */
+    private static void merge(ArrayList<Polynomial> polynomials, int left, int mid, int right) {
+        ArrayList<Polynomial> leftList = new ArrayList<>(polynomials.subList(left, mid + 1));
+        ArrayList<Polynomial> rightList = new ArrayList<>(polynomials.subList(mid + 1, right + 1));
 
-    //     // Test coefficient getter
-    //     System.out.println("\nPolynomial Single Coefficient Getter Test:");
-    //     System.out.println("p1 coefficient 0: " + p1.getCoefficient(0));
-    //     System.out.println("p1 coefficient 1: " + p1.getCoefficient(1));
-    //     System.out.println("p1 coefficient 2: " + p1.getCoefficient(2));
-    //     System.out.println("p1 coefficient 3: " + p1.getCoefficient(3));
-    //     // System.out.println("p1 coefficient 4: " + p1.getCoefficient(4)); Test Error Handling
+        int i = 0, j = 0, k = left;
+        while (i < leftList.size() && j < rightList.size()) {
+            if (leftList.get(i).compareTo(rightList.get(j)) <= 0) {
+                polynomials.set(k++, leftList.get(i++));
+            } else {
+                polynomials.set(k++, rightList.get(j++));
+            }
+        }
+        while (i < leftList.size()) {
+            polynomials.set(k++, leftList.get(i++));
+        }
+        while (j < rightList.size()) {
+            polynomials.set(k++, rightList.get(j++));
+        }
+    }
 
-    //     // Test coefficient setter
-    //     System.out.println("\nPolynomial Single Coefficient Setter Test:");
-    //     System.out.println("p2 before setting coefficient: " + p2.toString());
-    //     p2.setCoefficient(2, 5.0);
-    //     System.out.println("p2 after setting coefficient (5x^2): " + p2.toString());
-    //     p2.setCoefficient(6, 4.5);
-    //     System.out.println("p2 after setting coefficient (4.5x^6): " + p2.toString());
+    /**
+     * Sorts the list of polynomials using the built-in Collections.sort method.
+     *
+     * @param polynomials the list of polynomials to be sorted
+     */
+    public static void builtInSort(ArrayList<Polynomial> polynomials) {
+        long startTime = System.currentTimeMillis();
+        Collections.sort(polynomials);
+        long endTime = System.currentTimeMillis();
+        System.out.println("Built-in Sort Time: " + (endTime - startTime) + " ms");
+    }
 
-    //     // Test coefficients setter
-    //     System.out.println("\nPolynomial Coefficients Setter Test:");
-    //     System.out.println("p3 before setting coefficients: " + p3.toString());
-    //     System.out.println("c1 coefficient list: " + c1);
-    //     p3.setCoefficients(c1);
-    //     System.out.println("p3 after setting coefficients (c1): " + p3.toString());
+    /**
+     * Performs a linear search for a polynomial in the list.
+     *
+     * @param polynomials the list of polynomials to search through
+     * @param target      the polynomial to search for
+     * @return the index of the target polynomial, or -1 if not found
+     */
+    public static int linearSearch(ArrayList<Polynomial> polynomials, Polynomial target) {
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < polynomials.size(); i++) {
+            if (polynomials.get(i).equals(target)) {
+                long endTime = System.currentTimeMillis();
+                System.out.println("Linear Search Time: " + (endTime - startTime) + " ms");
+                return i;
+            }
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println("Linear Search Time: " + (endTime - startTime) + " ms");
+        return -1;
+    }
 
-    //     // Test Evaluate Method
-    //     System.out.println("\nPolynomial Evaluate Method Test:");
-    //     System.out.println("p3: " + p3.toString());
-    //     System.out.println("p3 evaluated at x=2: " + p3.evaluate(2));
-    //     System.out.println("p3 evaluated at x=4: " + p3.evaluate(4));
-    //     System.out.println("p3 evaluated at x=-5: " + p3.evaluate(-5));
+    /**
+     * Performs a binary search for a polynomial in the list.
+     *
+     * @param polynomials the list of polynomials to search through
+     * @param target      the polynomial to search for
+     * @return the index of the target polynomial, or -1 if not found
+     */
+    public static int binarySearch(ArrayList<Polynomial> polynomials, Polynomial target) {
+        long startTime = System.currentTimeMillis();
+        int left = 0;
+        int right = polynomials.size() - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            int cmp = polynomials.get(mid).compareTo(target);
+            if (cmp < 0) {
+                left = mid + 1;
+            } else if (cmp > 0) {
+                right = mid - 1;
+            } else {
+                long endTime = System.currentTimeMillis();
+                System.out.println("Binary Search Time: " + (endTime - startTime) + " ms");
+                return mid;
+            }
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println("Binary Search Time: " + (endTime - startTime) + " ms");
+        return -1;
+    }
 
-    //     // Test Add Method
-    //     System.out.println("\nPolynomial Add Method Test:");
-    //     System.out.println("p5: " + p5.toString());
-    //     System.out.println("p6: " + p6.toString());
-    //     System.out.println("p5 + p6: " + p5.add(p6).toString());
-
-    //     // Test Subtract Method
-    //     System.out.println("\nPolynomial Subtract Method Test:");
-    //     System.out.println("p5: " + p5.toString());
-    //     System.out.println("p6: " + p6.toString());
-    //     System.out.println("p5 - p6: " + p5.subtract(p6).toString());
-
-    //     // Test Multiply Method
-    //     System.out.println("\nPolynomial Multiply Method Test:");
-    //     System.out.println("p5: " + p5.toString());
-    //     System.out.println("p6: " + p6.toString());
-    //     System.out.println("p5 * p6: " + p5.multiply(p6).toString());
-
-    //     // Test Clear Method
-    //     System.out.println("\nPolynomial Clear Method Test:");
-    //     System.out.println("p5 before clear: " + p5.toString());
-    //     p5.clear();
-    //     System.out.println("p5 after clear: " + p5.toString());
-
-    //     // Test compareTo Method
-    //     System.out.println("\nPolynomial compareTo Method Test:");
-    //     System.out.println("p5: " + p5.toString());
-    //     System.out.println("p6: " + p6.toString());
-    //     System.out.println("p5.compareTo(p6): " + p5.compareTo(p6));
-    //     p5.setCoefficients(c2);
-    //     p6.setCoefficients(c3);
-    //     System.out.println("p5 and p6 are both set to c2:");
-    //     System.out.println("p5: " + p5.toString());
-    //     System.out.println("p6: " + p6.toString());
-    //     System.out.println("p5.compareTo(p6): " + p5.compareTo(p6));
-    //     p5.setCoefficient(2, 5.0);
-    //     System.out.println("p5 2nd coefficient has been changed to 5:");
-    //     System.out.println("p5: " + p5.toString());
-    //     System.out.println("p6: " + p6.toString());
-    //     System.out.println("p5.compareTo(p6): " + p5.compareTo(p6));
-
-    //     // Prompt user for number of polynomials to be generated
-    //     Scanner scanner = new Scanner(System.in);
-    //     System.out.print("Enter the number of random polynomials to generate: ");
-    //     int numPolynomials = scanner.nextInt();
-
-    //     // Generate random polynomials
-    //     System.out.println("\nGenerating " + numPolynomials + " Random Polynomials:");
-    //     ArrayList<Polynomial> randomPolynomials = new ArrayList<>();
-    //     for (int i = 0; i < numPolynomials; i++) {
-    //         Polynomial poly = new Polynomial((int) (Math.random() * 5) + 1); // Random degree between 1 and 5
-    //         randomPolynomials.add(poly);
-    //         System.out.println("Random Polynomial " + (i + 1) + ": " + poly.toString());
-    //     }
-    //     scanner.close();
-
-    //     // Sort list using compareTo method
-    //     System.out.println("\nSorting Random Polynomials:");
-    //     randomPolynomials.sort(Polynomial::compareTo);
-
-    //     // Print sorted list
-    //     System.out.println("\nSorted Random Polynomials:");
-    //     for (int i = 0; i < randomPolynomials.size(); i++) {
-    //         System.out.println("Random Polynomial " + (i + 1) + ": " + randomPolynomials.get(i).toString());
-    //     }
-    // }
+    /**
+     * Performs a built-in binary search for a polynomial in the list using Collections.binarySearch.
+     *
+     * @param polynomials the list of polynomials to search through
+     * @param target      the polynomial to search for
+     * @return the index of the target polynomial, or -1 if not found
+     */
+    public static int builtInBinarySearch(ArrayList<Polynomial> polynomials, Polynomial target) {
+        long startTime = System.currentTimeMillis();
+        int index = Collections.binarySearch(polynomials, target);
+        long endTime = System.currentTimeMillis();
+        System.out.println("Built-in Binary Search Time: " + (endTime - startTime) + " ms");
+        return index;
+    }
 }

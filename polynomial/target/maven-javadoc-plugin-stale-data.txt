@@ -1,0 +1,47 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+-encoding
+'UTF-8'
+-protected
+-source
+'17'
+-sourcepath
+'C:/Users/micha/OneDrive/Documents/GitHub/CTIS210-Project_2/polynomial/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2025. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/micha/OneDrive/Documents/GitHub/CTIS210-Project_2/polynomial/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'polynomial 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'polynomial 1.0-SNAPSHOT API'
+edu.guilford
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\src\main\java = 1737205286151
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\allclasses-index.html = 1738102186164
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\allpackages-index.html = 1738102186170
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\copy.svg = 1738102186256
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\element-list = 1738102186057
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\help-doc.html = 1738102186240
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\index-all.html = 1738102186223
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\index.html = 1738102186233
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\link.svg = 1738102186260
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\member-search-index.js = 1738102186182
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\module-search-index.js = 1738102186173
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\overview-tree.html = 1738102186141
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\package-search-index.js = 1738102186175
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\script.js = 1738102186255
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\search-page.js = 1738102186269
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\search.html = 1738102186230
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\search.js = 1738102186265
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\stylesheet.css = 1738102186251
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\tag-search-index.js = 1738102186184
+C:\Users\micha\OneDrive\Documents\GitHub\CTIS210-Project_2\polynomial\target\reports\apidocs\type-search-index.js = 1738102186179

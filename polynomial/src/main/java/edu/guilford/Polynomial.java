@@ -2,17 +2,19 @@ package edu.guilford;
 
 import java.util.ArrayList;
 
+/**
+ * The Polynomial class represents a mathematical polynomial with double coefficients.
+ * It provides methods to evaluate the polynomial, add, subtract, multiply, and compare polynomials.
+ * Additionally, it includes methods to manipulate and display the polynomial's coefficients.
+ */
 public class Polynomial implements Comparable<Polynomial> {
     private ArrayList<Double> coefficients;
     private int degree;
-    
-    // Constructors
-    // public Polynomial() {
-    //     coefficients = new ArrayList<Double>();
-    //     degree = -1;
-    // }
 
-    // New Random Constructor (Degree: [3,10] | Coefficients [-5,5])
+    /**
+     * Default constructor that initializes a polynomial with random degree (between 3 and 10) 
+     * and random coefficients (between -5 and 5).
+     */
     public Polynomial() {
         this.degree = 3 + (int)(Math.random() * 8); // Random degree between 3 and 10
         this.coefficients = new ArrayList<Double>();
@@ -21,11 +23,20 @@ public class Polynomial implements Comparable<Polynomial> {
         }
     }
 
+    /**
+     * Constructor that initializes a polynomial with a given list of coefficients.
+     * @param coefficients the coefficients of the polynomial.
+     */
     public Polynomial(ArrayList<Double> coefficients) {
         this.coefficients = parseCoefficients(coefficients);
         degree = this.coefficients.size() - 1;
     }
 
+    /**
+     * Constructor that initializes a polynomial with a specific degree and random coefficients
+     * between -15 and 15.
+     * @param degree the degree of the polynomial.
+     */
     public Polynomial(int degree) {
         this.degree = degree;
         coefficients = new ArrayList<Double>();
@@ -34,32 +45,46 @@ public class Polynomial implements Comparable<Polynomial> {
         }
     }
 
-    // Returns coefficients of the polynomial removed of leading zeros
+    /**
+     * Removes leading zeros from the given list of coefficients.
+     * @param data the list of coefficients to parse.
+     * @return the parsed list with no leading zeros.
+     */
     private ArrayList<Double> parseCoefficients(ArrayList<Double> data) {
-        // Check for empty data
         if (data.isEmpty()) {
             return data;
         }
 
-        // Return if data is valid (no leading zeros)
         if (data.get(data.size() - 1) != 0) {
             return data;
         }
 
-        // Remove leading zero and recursively call parseCoefficients
         data.remove(data.size() - 1);
         return parseCoefficients(data);
     }
 
-    // Getters
+    /**
+     * Returns the coefficients of the polynomial.
+     * @return the list of coefficients.
+     */
     public ArrayList<Double> getCoefficients() {
         return coefficients;
     }
 
+    /**
+     * Returns the degree of the polynomial.
+     * @return the degree of the polynomial.
+     */
     public int getDegree() {
         return degree;
     }
 
+    /**
+     * Returns the coefficient of a specific term in the polynomial.
+     * @param index the index of the coefficient.
+     * @return the coefficient at the specified index.
+     * @throws IllegalArgumentException if the index is out of bounds.
+     */
     public double getCoefficient(int index) {
         if (index < 0 || index > degree) {
             throw new IllegalArgumentException("Invalid index");
@@ -67,32 +92,40 @@ public class Polynomial implements Comparable<Polynomial> {
         return coefficients.get(index);
     }
 
-    // Setters
+    /**
+     * Sets the coefficients of the polynomial to the provided list.
+     * @param coefficients the new list of coefficients.
+     */
     public void setCoefficients(ArrayList<Double> coefficients) {
         this.coefficients = parseCoefficients(coefficients);
         degree = this.coefficients.size() - 1;
     }
 
+    /**
+     * Sets the coefficient of a specific term in the polynomial.
+     * @param k the index of the term.
+     * @param coefficient the new coefficient to set.
+     * @throws IllegalArgumentException if the index is invalid.
+     */
     public void setCoefficient(int k, double coefficient) {
-        // Check for invalid index
         if (k < 0) {
             throw new IllegalArgumentException("Invalid index");
         }
 
-        // Expand polynomial if necessary (index > degree)
         while (k > coefficients.size() - 1) {
             coefficients.add(0.0);
         }
 
-        // Set coefficient
         coefficients.set(k, coefficient);
-
-        // Remove leading zeros
         coefficients = parseCoefficients(coefficients);
         degree = coefficients.size() - 1;
     }
 
-    // Evaluate polynomial at x
+    /**
+     * Evaluates the polynomial at a given value of x.
+     * @param x the value at which to evaluate the polynomial.
+     * @return the result of the evaluation.
+     */
     public double evaluate(double x) {
         double result = 0;
         for (int i = 0; i <= degree; i++) {
@@ -101,15 +134,15 @@ public class Polynomial implements Comparable<Polynomial> {
         return result;
     }
 
-    // Add polynomials
+    /**
+     * Adds another polynomial to this polynomial.
+     * @param p the polynomial to add.
+     * @return a new polynomial representing the sum.
+     */
     public Polynomial add(Polynomial p) {
-        // Create new polynomial
         Polynomial result = new Polynomial();
-
-        // Set degree of result
         result.degree = Math.max(degree, p.getDegree());
 
-        // Add coefficients
         for (int i = 0; i <= result.degree; i++) {
             double sum = 0;
             if (i <= degree) {
@@ -121,22 +154,21 @@ public class Polynomial implements Comparable<Polynomial> {
             result.coefficients.add(sum);
         }
 
-        // Remove leading zeros
         result.coefficients = parseCoefficients(result.coefficients);
         result.degree = result.coefficients.size() - 1;
 
         return result;
     }
 
-    // Subtract polynomials
+    /**
+     * Subtracts another polynomial from this polynomial.
+     * @param p the polynomial to subtract.
+     * @return a new polynomial representing the difference.
+     */
     public Polynomial subtract(Polynomial p) {
-        // Create new polynomial
         Polynomial result = new Polynomial();
-
-        // Set degree of result
         result.degree = Math.max(degree, p.getDegree());
 
-        // Subtract coefficients
         for (int i = 0; i <= result.degree; i++) {
             double difference = 0;
             if (i <= degree) {
@@ -148,22 +180,21 @@ public class Polynomial implements Comparable<Polynomial> {
             result.coefficients.add(difference);
         }
 
-        // Remove leading zeros
         result.coefficients = parseCoefficients(result.coefficients);
         result.degree = result.coefficients.size() - 1;
 
         return result;
     }
 
-    // Multiply polynomials
+    /**
+     * Multiplies this polynomial by another polynomial.
+     * @param p the polynomial to multiply.
+     * @return a new polynomial representing the product.
+     */
     public Polynomial multiply(Polynomial p) {
-        // Create new polynomial
         Polynomial result = new Polynomial();
-
-        // Set degree of result
         result.degree = degree + p.getDegree();
 
-        // Multiply coefficients
         for (int i = 0; i <= result.degree; i++) {
             double product = 0;
             for (int j = 0; j <= i; j++) {
@@ -174,20 +205,24 @@ public class Polynomial implements Comparable<Polynomial> {
             result.coefficients.add(product);
         }
 
-        // Remove leading zeros
         result.coefficients = parseCoefficients(result.coefficients);
         result.degree = result.coefficients.size() - 1;
 
         return result;
     }
 
-    // Clear polynomial
+    /**
+     * Clears the polynomial, resetting the coefficients and degree.
+     */
     public void clear() {
         coefficients.clear();
         degree = -1;
     }
 
-    // Print polynomial
+    /**
+     * Returns a string representation of the polynomial.
+     * @return the string representation of the polynomial.
+     */
     @Override
     public String toString() {
         if (degree == -1) {
@@ -209,9 +244,13 @@ public class Polynomial implements Comparable<Polynomial> {
         return result;
     }
 
+    /**
+     * Compares this polynomial to another polynomial.
+     * @param otherPolynomial the polynomial to compare to.
+     * @return 1 if this polynomial is greater, -1 if less, and 0 if equal.
+     */
     @Override
     public int compareTo(Polynomial otherPolynomial) {
-        // Check for degree comparison
         if (degree > otherPolynomial.getDegree()) {
             return 1;
         }
@@ -219,22 +258,19 @@ public class Polynomial implements Comparable<Polynomial> {
             return -1;
         }
 
-        // If degree equal, locate first differeing coefficient
         int checkDegree = degree;
         while (coefficients.get(checkDegree) == otherPolynomial.getCoefficient(checkDegree)) {
             checkDegree--;
             if (checkDegree == -1) {
-                return 0; // If no coefficients differ
+                return 0;
             }
         }
 
-        // Compare coefficients at checkDegree point
         if (coefficients.get(checkDegree) > otherPolynomial.getCoefficient(checkDegree)) {
             return 1;
         }
         else {
             return -1;
         }
-
     }
 }

@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"edu.guilford","l":"Main"},{"p":"edu.guilford","l":"Polynomial"}];updateSearchResults();
